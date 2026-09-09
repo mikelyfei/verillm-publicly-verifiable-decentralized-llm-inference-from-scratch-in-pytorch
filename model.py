@@ -106,8 +106,15 @@ def weighted_value_sum(attn_weights, values):
     # TODO: combine attention weights (Tq, Tk) with values (Tk, d_head) into context (Tq, d_head).
     return attn_weights @ values
 
-# Step 12 - project_qkv (not yet solved)
-# TODO: implement
+# Step 12 - project_qkv
+import numpy as np
+
+def project_qkv(x, attn_params):
+    # TODO: project x into query, key, value tensors using attn_params
+    q = x @ attn_params["Wq"] + attn_params["bq"]
+    k = x @ attn_params["Wk"] + attn_params["bk"]
+    v = x @ attn_params["Wv"] + attn_params["bv"]
+    return q, k, v
 
 # Step 13 - append_kv_cache (not yet solved)
 # TODO: implement
