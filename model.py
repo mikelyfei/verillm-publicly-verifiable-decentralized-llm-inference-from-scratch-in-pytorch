@@ -145,8 +145,10 @@ def scaled_dot_product_attention_with_cache(queries, kv_cache, query_offset=0):
     attn = weighted_value_sum(scores, v)
     return attn
 
-# Step 15 - apply_output_projection (not yet solved)
-# TODO: implement
+# Step 15 - apply_output_projection
+def apply_output_projection(context, attn_params):
+    # TODO: project the attention context back to model dimension using attn_params['Wo'] and attn_params['bo'].
+    return context @ attn_params["Wo"] + attn_params["bo"]
 
 # Step 16 - single_head_causal_self_attention (not yet solved)
 # TODO: implement
