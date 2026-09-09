@@ -85,8 +85,19 @@ def apply_causal_mask(scores, query_offset=0):
     mask = np.triu(mask, k=query_offset+1)
     return mask + scores
 
-# Step 10 - softmax_attention_weights (not yet solved)
-# TODO: implement
+# Step 10 - softmax_attention_weights
+import numpy as np
+
+def softmax(x, axis=-1):
+    x_max = np.max(x, axis=axis, keepdims=True)
+    x = x - x_max
+    exp_x = np.exp(x)
+    return exp_x / np.sum(exp_x, axis=axis, keepdims=True)
+
+def softmax_attention_weights(masked_scores):
+    """Convert masked attention scores to a probability distribution via softmax over the last axis."""
+    # TODO: apply a numerically stable softmax along the last axis of masked_scores
+    return softmax(masked_scores)
 
 # Step 11 - weighted_value_sum (not yet solved)
 # TODO: implement
