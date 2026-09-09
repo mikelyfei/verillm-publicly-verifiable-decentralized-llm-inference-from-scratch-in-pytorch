@@ -116,8 +116,19 @@ def project_qkv(x, attn_params):
     v = x @ attn_params["Wv"] + attn_params["bv"]
     return q, k, v
 
-# Step 13 - append_kv_cache (not yet solved)
-# TODO: implement
+# Step 13 - append_kv_cache
+def append_kv_cache(kv_cache, new_k, new_v):
+    # TODO: extend the per-layer KV cache by appending new_k and new_v along the time axis.
+    k, v = kv_cache["k"], kv_cache["v"]
+    if k is None:
+        k = new_k
+    else:
+        k = np.concatenate([k, new_k], axis=0)
+    if v is None:
+        v = new_v
+    else:
+        v = np.concatenate([v, new_v], axis=0)
+    return {"k": k, "v": v}
 
 # Step 14 - scaled_dot_product_attention_with_cache (not yet solved)
 # TODO: implement
