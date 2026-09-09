@@ -111,9 +111,12 @@ import numpy as np
 
 def project_qkv(x, attn_params):
     # TODO: project x into query, key, value tensors using attn_params
-    q = x @ attn_params["Wq"] + attn_params["bq"]
-    k = x @ attn_params["Wk"] + attn_params["bk"]
-    v = x @ attn_params["Wv"] + attn_params["bv"]
+    bq = 0 if attn_params["bq"] is None else attn_params["bq"]
+    bk = 0 if attn_params["bk"] is None else attn_params["bk"]
+    bv = 0 if attn_params["bv"] is None else attn_params["bv"]
+    q = x @ attn_params["Wq"] + bq
+    k = x @ attn_params["Wk"] + bk
+    v = x @ attn_params["Wv"] + bv
     return q, k, v
 
 # Step 13 - append_kv_cache
