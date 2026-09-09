@@ -16,8 +16,13 @@ def build_char_vocab(corpus):
         vocab["itos"][i] = char
     return vocab
 
-# Step 2 - encode_string (not yet solved)
-# TODO: implement
+# Step 2 - encode_string
+def encode_string(text, vocab):
+    # TODO: convert text into a list of integer token ids using vocab['stoi'].
+    token_ids = []
+    for t in text:
+        token_ids.append(vocab["stoi"][t])
+    return token_ids
 
 # Step 3 - decode_ids (not yet solved)
 # TODO: implement
