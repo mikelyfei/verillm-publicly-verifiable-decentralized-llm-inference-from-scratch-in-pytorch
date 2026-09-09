@@ -111,9 +111,9 @@ import numpy as np
 
 def project_qkv(x, attn_params):
     # TODO: project x into query, key, value tensors using attn_params
-    bq = 0 if attn_params["bq"] is None else attn_params["bq"]
-    bk = 0 if attn_params["bk"] is None else attn_params["bk"]
-    bv = 0 if attn_params["bv"] is None else attn_params["bv"]
+    bq = 0 if attn_params.get("bq") is None else attn_params["bq"]
+    bk = 0 if attn_params.get("bk") is None else attn_params["bk"]
+    bv = 0 if attn_params.get("bv") is None else attn_params["bv"]
     q = x @ attn_params["Wq"] + bq
     k = x @ attn_params["Wk"] + bk
     v = x @ attn_params["Wv"] + bv
@@ -153,8 +153,20 @@ def apply_output_projection(context, attn_params):
     # TODO: project the attention context back to model dimension using attn_params['Wo'] and attn_params['bo'].
     return context @ attn_params["Wo"] + attn_params["bo"] if attn_params["bo"] is not None else context @ attn_params["Wo"]
 
-# Step 16 - single_head_causal_self_attention (not yet solved)
-# TODO: implement
+# Step 16 - single_head_causal_self_attention
+import numpy as np
+
+def single_head_causal_self_attention(x, attn_params, kv_cache, query_offset=0):
+    """Single-head causal self-attention with KV-cache update.
+
+    Returns (out, kv_cache) where out has shape (T, d_model).
+    """
+    # TODO: project to q,k,v; update kv_cache; run causal attention; output projection.
+    q, k, v = project_qkv(x, attn_params)
+    kv_cache = append_kv_cache(kv_cache, k, v)
+    attn = scaled_dot_product_attention_with_cache(q, kv_cache, query_offset)
+    out = apply_output_projection(attn, attn_params)
+    return out
 
 # Step 17 - ffn_first_layer_gelu (not yet solved)
 # TODO: implement
