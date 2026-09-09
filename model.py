@@ -141,8 +141,8 @@ def scaled_dot_product_attention_with_cache(queries, kv_cache, query_offset=0):
     # TODO: combine score, scale, mask, softmax, and weighted value sum primitives.
     k = kv_cache["k"]
     v = kv_cache["v"]
-    scores = compute_attention_scores(q, k)
-    scores = scale_attention_scores(scores, q.shape[1])
+    scores = compute_attention_scores(queries, k)
+    scores = scale_attention_scores(scores, queries.shape[1])
     scores = apply_causal_mask(scores, query_offset)
     scores = softmax_attention_weights(scores)
     attn = weighted_value_sum(scores, v)
